@@ -14,7 +14,7 @@ namespace CookMatch.API.Services
             this.recipeRepository = recipeRepository;
         }
 
-        public async Task<List<Recipe>> GetRecipes(List<string>? ingredients = null) // добавить логику фильтров запроса
+        public async Task<List<Recipe>> GetRecipes(List<string>? ingredients = null)
         {
             return await recipeRepository.Get(ingredients);
         }

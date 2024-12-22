@@ -42,5 +42,18 @@ namespace FoodStore.API.Application.Services
 
             return Results.Ok(responseId);
         }
+
+        public async Task<IResult> AddToCart(FoodRequest request, Guid foodId)
+        {
+            var (food, error) = Food.Create(foodId, request.Name,
+                request.Description, request.Price);
+
+            if(!string.IsNullOrEmpty(error))
+            {
+                return Results.BadRequest(error);
+            }
+
+            return Results.Ok(food);
+        }
     }
 }

@@ -16,41 +16,19 @@ namespace CookMatch.API.DataAccess.Repositories
             this.context = context;
         }
 
-        /*        public async Task<List<Recipe>> Get()
-                {
-                    var recipeEntities = await context.Recipes
-                        .Include(r => r.Ingredients)
-                        .ToListAsync();
-
-                    var recipes = recipeEntities
-                        .Select(r => Recipe.Create(
-                            r.Id,
-                            r.Name,
-                            r.Ingredients
-                                .Select(i => Ingredient.Create(i.Id, i.Name, i.Unit).Ingredient)
-                                .ToList()
-                        ).Recipe).ToList();
-
-                    return recipes;
-                }*/
-
         public async Task<List<Recipe>> Get(List<string>? ingredients = null)
         {
-            // Начальная выборка рецептов с включением ингредиентов
             var query = context.Recipes
                 .Include(r => r.Ingredients)
                 .AsQueryable();
 
-            // Применяем фильтрацию, если передан список названий ингредиентов
             if (ingredients != null && ingredients.Any())
             {
                 query = query.Where(r => r.Ingredients.Any(i => ingredients.Contains(i.Name)));
             }
 
-            // Выполняем запрос
             var recipeEntities = await query.ToListAsync();
 
-            // Преобразуем в доменные объекты
             var recipes = recipeEntities
                 .Select(r => Recipe.Create(
                     r.Id,
@@ -62,7 +40,6 @@ namespace CookMatch.API.DataAccess.Repositories
 
             return recipes;
         }
-
 
         public async Task<Guid> Create(Recipe recipe)
         {

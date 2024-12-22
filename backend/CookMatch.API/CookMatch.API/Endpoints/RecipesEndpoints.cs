@@ -15,12 +15,12 @@ namespace CookMatch.API.Endpoints
     {
         public static IEndpointRouteBuilder MapRecipesEndpoits(this IEndpointRouteBuilder builder)
         {
-            var group = builder.MapGroup("api/Recipes").RequireAuthorization();
+            var group = builder.MapGroup("api/Recipes");
 
-            group.MapPost("/", CreatRecipe).RequirePermission(Permission.Create); ;
-            group.MapGet("/", GetRecipes).RequirePermission(Permission.Read);
-            group.MapDelete("/{id:guid}", DeleteRecipe).RequirePermission(Permission.Delete); ;
-            group.MapPut("/{id:guid}", UpdateRecipe).RequirePermission(Permission.Update); ;
+            group.MapPost("/", CreatRecipe);
+            group.MapPost("/get", GetRecipes);
+            group.MapDelete("/{id:guid}", DeleteRecipe);
+            group.MapPut("/{id:guid}", UpdateRecipe);
 
             return builder;
         }

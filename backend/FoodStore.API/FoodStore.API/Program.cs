@@ -13,12 +13,19 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IFoodRepository, FoodRepository>();
 builder.Services.AddScoped<IFoodService, FoodService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IRecipeService, RecipeService>();
 
 builder.Services.AddDbContext<FoodStoreDbContext>(
     options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(FoodStoreDbContext)));
     });
+
+builder.Services.AddHttpClient<IRecipeService, RecipeService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5257");
+});
 
 var app = builder.Build();
 
