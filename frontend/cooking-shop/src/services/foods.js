@@ -19,11 +19,10 @@ export const addToCart = async (food) => {
 };
 
 export const removeFromCart = async (foodId) => {
-  let response = await axios.post(
-    "http://localhost:5198/api/foods/cart/",
-    { foodId },
+  const response = await axios.delete(
+    `http://localhost:5198/api/foods/cart${foodId}`, // Правильная интерполяция
     {
-      withCredentials: true,
+      withCredentials: true, // Если необходимо
     }
   );
 

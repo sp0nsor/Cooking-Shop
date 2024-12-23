@@ -17,7 +17,7 @@ namespace FoodStore.API.Endpoints
             group.MapGet("/", GetFoods);
             group.MapPost("/cart", AddToCart);
             group.MapGet("/cart", GetCart);
-            group.MapPost("/cart{id:guid}", RemoveFromCart);
+            group.MapDelete("/cart{foodId:guid}", RemoveFromCart);
             group.MapGet("/recipes", GetRecipes);
 
             return builder;
@@ -59,6 +59,8 @@ namespace FoodStore.API.Endpoints
 
         private static IResult RemoveFromCart(Guid foodId, ICartService cartService, HttpContext httpContext)
         {
+            Console.WriteLine("--------------------------");
+
             cartService.RemoveFromCart(foodId, httpContext);
 
             return Results.Ok();

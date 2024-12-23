@@ -10,7 +10,7 @@ import {
 
 export default function CartItem({ item, onRemove }) {
   const onCartbuttonClick = () => {
-    console.log("qweqweqweqwewq");
+    onRemove(item.id);
   };
   return (
     <Card variant={"filled"} backgroundColor={"teal.300"}>
@@ -21,7 +21,7 @@ export default function CartItem({ item, onRemove }) {
       <CardBody>
         <Text fontSize={"md"}>Описание: {item.description}</Text>
         <Text fontSize={"md"}>Количество: {item.quantity}</Text>
-        <Text fontSize={"xl"}>Цена: {item.price}</Text>
+        <Text fontSize={"xl"}>Цена: {item.price} деревянных</Text>
       </CardBody>
       <Button onClick={onCartbuttonClick} backgroundColor={"pink.200"}>
         Удалить

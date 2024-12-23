@@ -20,7 +20,7 @@ export default function Food({ food, onSubmit }) {
       <Divider borderColor={"black"}></Divider>
       <CardBody>
         <Text fontSize={"md"}>Описание: {food.description}</Text>
-        <Text fontSize={"xl"}>Цена: {food.price}</Text>
+        <Text fontSize={"xl"}>Цена: {food.price} деревянных</Text>
       </CardBody>
       <Button onClick={onCartbuttonClick} backgroundColor={"pink.200"}>
         Добавить в корзину
