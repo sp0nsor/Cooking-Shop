@@ -6,5 +6,6 @@ namespace FoodStore.API.Core.Abstractions.Services
     {
         Cart GetCartFromCookie(HttpContext httpContext);
         void SetCartCookie(HttpContext httpContext, Cart cart);
+        void RemoveFromCart(Guid foodId, HttpContext httpContext);
     }
 }

@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -28,6 +30,15 @@ builder.Services.AddHttpClient<IRecipeService, RecipeService>(client =>
 });
 
 var app = builder.Build();
+
+app.UseCors(policy =>
+{
+    policy.WithOrigins("http://localhost:5173")
+          .AllowCredentials()
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+});
+
 
 app.MapFoodEndpoints();
 

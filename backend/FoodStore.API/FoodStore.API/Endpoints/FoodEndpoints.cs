@@ -17,11 +17,11 @@ namespace FoodStore.API.Endpoints
             group.MapGet("/", GetFoods);
             group.MapPost("/cart", AddToCart);
             group.MapGet("/cart", GetCart);
+            group.MapPost("/cart{id:guid}", RemoveFromCart);
             group.MapGet("/recipes", GetRecipes);
 
             return builder;
         }
-
 
         private static async Task<IResult> AddFood([FromBody] FoodRequest request, IFoodService foodService)
         {
@@ -57,6 +57,13 @@ namespace FoodStore.API.Endpoints
             return Results.Ok();
         }
 
+        private static IResult RemoveFromCart(Guid foodId, ICartService cartService, HttpContext httpContext)
+        {
+            cartService.RemoveFromCart(foodId, httpContext);
+
+            return Results.Ok();
+        }
+
         private static IResult GetCart(ICartService cartService, HttpContext httpContext)
         {
             var cart = cartService.GetCartFromCookie(httpContext);
@@ -67,8 +74,8 @@ namespace FoodStore.API.Endpoints
         private static async Task<IResult> GetRecipes(IRecipeService recipeService, HttpContext httpContext)
         {
             var recipes = await recipeService.GetRecipes(httpContext);
-
             return Results.Ok(recipes);
         }
+
     }
 }

@@ -11,7 +11,7 @@ namespace FoodStore.API.Application.Services
             var options = new CookieOptions
             {
                 HttpOnly = true,
-                Expires = DateTimeOffset.UtcNow.AddDays(30)
+                Expires = DateTimeOffset.UtcNow.AddDays(30),
             };
 
             var json = JsonSerializer.Serialize(cart);
@@ -22,19 +22,12 @@ namespace FoodStore.API.Application.Services
         {
             if (httpContext.Request.Cookies.TryGetValue("Cart", out var cartJson))
             {
-                Console.WriteLine($"Cart JSON from cookie: {cartJson}");
-
                 try
                 {
                     var cart = JsonSerializer.Deserialize<Cart>(cartJson);
                     if (cart != null)
                     {
-                        Console.WriteLine($"Deserialized cart: {JsonSerializer.Serialize(cart)}");
                         return cart;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Deserialization resulted in null.");
                     }
                 }
                 catch (JsonException ex)
@@ -43,7 +36,16 @@ namespace FoodStore.API.Application.Services
                 }
             }
 
-            return new Cart(); // Возвращаем новую корзину, если cookie не найдена
+            return new Cart();
+        }
+
+        public void RemoveFromCart(Guid foodId, HttpContext httpContext)
+        {
+            var cart = GetCartFromCookie(httpContext);
+
+            cart.RemoveFromCart(foodId);
+
+            SetCartCookie(httpContext, cart);
         }
     }
 }

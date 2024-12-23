@@ -33,7 +33,6 @@ namespace FoodStore.API.Application.Services
                 return recipes;
             }
 
-            Console.WriteLine("хуй хуй хуй хуй хуй хуй");
             return new List<RecipeResponce>();
         }
     }
